@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>League Makers</title>
+    <link href="/static/style.css" rel="stylesheet">
+    <link rel="icon" href="/static/assets/bracket.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" href="/static/assets/bracket.ico" type="image/x-icon"/>
+    <!-- importing bootstrap css files -->
+	  <!-- Latest compiled and minified CSS -->
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <!-- Optional theme -->
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    {% block scripts %}
+    {% endblock %}
+    <!--Bootstrap NavBar-->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">           
+          <a class="navbar-brand" href="#">
+            <img alt="Brand" src="/static/assets/bracket.png">
+          </a>
+        </div>
+        <div class="navbar-inner container-fluid">
+          <ul class="nav navbar-nav navbar-left">
+            <!-- About Link -->
+              <form action="/about" method="get" id="about_form" class="navbar-form navbar-left league-pass">
+                <div class="form-group">
+                  <input type="hidden" name="league_key_string" value="{{league_key_string}}">
+                </div>
+              </form>
+              <li
+                {% if about_active %}
+                  class="active"
+                {% endif %}
+              ><a href="/about" onclick="document.getElementById('about_form').submit(); return false;">About</a></li>
+            <!-- End About -->
+            <li class="navbar divider-vertical"></li>
+          </ul>
+          {% if user %}
+            <ul class="nav navbar-nav navbar-left">
+            <!-- Manage Link -->
+                <form action="/manage" method="get" id="manage_form" class="navbar-form navbar-left league-pass">
+                  <div class="form-group">
+                    <input type="hidden" name="league_key_string" value="{{league_key_string}}">
+                  </div>
+                </form>
+                <li
+                  {% if manage_active %}
+                    class="manage active"
+                  {% endif %}
+                ><a href="/manage" onclick="document.getElementById('manage_form').submit(); return false;">Manage</a></li>
+                <li class="navbar divider-vertical"></li>
+              <!-- End Manage Link -->
+            </ul>
+            {% if league_selected %}
+            <p class="navbar-text">Current League: {{league_name}}</p>
+            <ul class="nav navbar-nav navbar-left">
+              <li class="navbar divider-vertical"></li>
+                {% if admin %}
+                <!-- MU page -->
+                <form action="/match_create" method="get" id="match_form" class="navbar-form navbar-left league-pass">
+                  <div class="form-group">
+                    <input type="hidden" name="league_key_string" value="{{league_key_string}}">
+                  </div>
+                </form>
+                <li
+                  {% if match_active %}
+                    class="active"
+                  {% endif %}
+                ><a href="/match_create" onclick="document.getElementById('match_form').submit(); return false;">Matches</a></li>
+                <li class="navbar divider-vertical"></li>
+                <!-- End MU page -->
+                <!--Results Link -->
+                  <form action="/results" method="get" id="results_form" class="navbar-form navbar-left league-pass">
+                    <div class="form-group">
+                      <input type="hidden" name="league_key_string" value="{{league_key_string}}">
+                    </div>
+                  </form>
+                  <li
+                    {% if results_active %}
+                      class="active"
+                    {% endif %}
+                  ><a href="/results" onclick="document.getElementById('results_form').submit(); return false;">Results</a></li>
+                  <li class="navbar divider-vertical"></li>
+                <!-- End Results Link -->
+                {% endif %}
+                <!-- Ranking Link -->
+                  <form action="/ranking" method="get" id="ranking_form" class="navbar-form navebar-left league-pass">
+                    <div class="form-group">
+                      <input type="hidden" name="league_key_string" value="{{league_key_string}}">
+                    </div>
+                  </form>
+                  <li 
+                    {% if rank_active %}
+                       class="active"
+                    {% endif %}
+                  ><a href="javascript:{}" onclick="document.getElementById('ranking_form').submit();">Ranking</a></li>
+                  <li class="navbar divider-vertical"></li>
+                <!-- End Ranking link -->
+              {% endif %}
+            </ul>
+          {% endif %}
+          <ul class="nav navbar-nav navbar-right">
+            <li class="navbar divider-vertical"></li>
+            <li><a href="{{url}}"
+            {% if user %}
+              title="Logged in as: {{user_email}}">Logout
+            {% else %}
+              >Login
+            {% endif %}
+            </a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!--end navbar -->
+  </head>
+  <body>
+{% block content %}
+{% endblock %}
+  </body>
+</html>

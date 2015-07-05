@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+  <form action="/tournament" method="POST">
+    <div class="col-md-offset-5">
+      <ul>
+      {% for entrant in entrants %}
+        <li style="list-style-type: none;">
+          <label for="{{entrant.name}}">
+            <input type="checkbox" class="check" name="entrants" id="{{entrant.name}}" value="{{entrant.name}}" checked>
+            {{entrant.name}}
+          </label>
+        </li>
+      {% endfor %}
+      <input type="hidden" name="league_key_string" value="{{league_key_string}}">
+    </div>
+    <div class="col-md-offset-5">
+      <select name="type" class="form-control" style="width: 29%;">
+        <option value="double elimination">Double Elimination</option>
+        <option value="single elimination">Single Elimination</option>
+        <option value="round robin">Round Robin</optin>
+        <!--option vlaue="swiss">Swiss</optin-->
+      </select>
+    </div>
+    <div id="buttonbar">
+      <button class="button">Create Tournament</button>
+    </div>
+  </form>
+{% endblock %}

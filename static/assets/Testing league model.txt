@@ -1,0 +1,2 @@
+Testing league model
+league_key_string=ahBkZXZ-bGVhZ3VlbWFrZXJzchgLEgtsZWFndWVNb2RlbBiAgICAgKDACww

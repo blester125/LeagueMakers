@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+  {% block scripts %}
+    <script src="/static/creating_matchups.js"></script>
+  {% endblock %}
+  {% block content %}
+    <h2>{{league_name}}</h2>
+    
+    <form action"/match_create" method="post" id="create" name="create" class="form-inline">
+    <div align="center">
+    <select class="form-control inline" style="width: 15%;" id="player_one" name="player_one" onchange="player_two_update(this)">
+    {% for i in member_list %} 
+      <option value="{{i}}">{{i}}</option>
+    {% endfor %}
+    </select>
+    vs.
+    <select class="form-control inline" style="width: 15%" id="player_two" name="player_two" onchange="player_one_update(this)">
+    {% for i in member_list %} 
+      <option value="{{i}}">{{i}}</option>
+    {% endfor %}
+    </select>
+    </div>
+    
+      <input type="hidden" name="league_key_string" value="{{league_key_string}}">
+      
+      <div id="buttonbar">
+        <button class="button" id="submitbtn" disabled="true" conclick="btnsubmit(this); return false;">Create Match</button>
+        <button class="button" id="random" disabled="true" onclick="randomize(this);return false;">Randomize</button>
+      </div>
+      <script>
+        defaults(this);
+        player_one_update(this);
+        player_two_update(this);
+      </script>
+    </form>
+  {% endblock %}

@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+  {% block scripts %}
+    <!-- Custom styles for this template -->
+    <link href="static/dashboard.css" rel="stylesheet">
+    <script src="static/jquery.js"></script>
+    <script src="static/manage_ajax.js"></script>
+{% endblock %}
+{% block content %}
+  <div class="container-fluid">
+    <div class="col-sm-3 col-md-2 sidebar">
+      <ul class="nav nav-sidebar">
+        <li class="userInfoLink"><a onclick="userInfo()">User Information</a></li>
+        <li class="yourLeagueLink"><a onclick="yourLeagues()">Your Leagues</a></li>
+        <li class="createLeagueLink"><a>Create League</a></li>
+      </ul>
+        {% if league_selected %}
+          <ul class="nav nav-sidebar">
+            <p class="navbar-text">Current League: {{league_name}}</p>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li class="leagueInfoLink"><a onclick="leagueInfo()">League Information</a></li>
+            <li class="historyLink"><a onclick="showHistory()">History</a></li>
+            <li class="tournamentLink"><a onclick="showTournament()">Tournament</a></li>
+            {% if member %}
+              <li class="uploadPicLink"><a>Upload Picture</a></li>
+            {% endif %}
+            {% if admin %}
+              <!-- ADMIN NEEDED -->
+              <li class="addMemberLink"><a>Add Member</a></li>
+              <!-- ADMIN NEEDED -->
+              <li class="delMemberLink"><a onclick="deleteMemberShow()">Delete Member</a></li>
+              <!-- ADMIN NEEDED -->
+              <li class="showAdminsLink"><a onclick="showAdmins()">Show Admins</a></li>
+              <!-- ADMIN NEEDED -->
+              <li class="addAdminLink"><a>Add Admin</a></li>
+              <!-- ADMIN NEEDED -->
+              <li class="delAdminLink"><a onclick="deleteAdminsShow()">Delete Admin</a></li>
+              <!--Admin Needed-->
+              <li class="emailResultsLink"><a>Email Results</a></li>
+              <!-- ADMIN NEEDED -->
+              <li class='resetLink'><a>Reset Scores</a></li>
+              <!-- ADMIN NEEDED -->
+              <li class='deleteLeagueLink'><a>Delete League</a></li>
+            {% endif %}
+          </ul>
+        {% endif %}
+      </div>
+        <!-- Content Div What is actually Visable -->
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="content">
+          <h2>This is the Page Where You Can See Information About Your Own Preformance and About The Leagues You Are A Member Of Or Are An Admin Of.</h2>
+          </div>
+        </div>
+        <!-- Upload pic  Div -->
+        <!-- NO ADMIN -->
+        <div id="uploadPic" class="displayed" style="display:none;">
+        <h2>Upload a Fabulous Picture</h2>
+        <p align="center">This picture will be displayed next to your ranking</p>
+        <p align="center">This will be scaled to 32px so large pictures may not look super good</p><br><br>
+          <form action="{{upload_url}}" method="POST" enctype="multipart/form-data" class="displayed">
+            Upload File:<input type="file" name="image" accept="image/*" onchange="loadFile(event)" required class="displayed">
+            <img id="output"/>
+            <br>
+            <br> 
+            <input type="hidden" name="league_key_string" value="{{league_key_string}}"/>
+            <input type="submit" name="submit" value="Add This Pic!" class="button"> 
+          </form>
+        </div>
+        <!-- Create a new League Div -->
+        <!-- NO ADMIN -->
+        <div id="createLeague" style="display:none;">
+          <h2>Create A League</h2>
+          <form action='/makeLeague' method='POST'>
+            <input type="text" class="form-control" name="LeagueName" required placeholder="Enter the League Name">
+            <div id="buttonbar">
+              <button class="button" type="submit">Create</button>
+            </div>
+          </form>
+        </div>
+        <!-- Add Member Div -->
+        <!-- ADMIN NEEDED -->
+        <div id="addMember" style="display:none;">
+          <h2>Add A Member</h2>
+          <div id="memberform">
+            <input type="hidden" id="league_key_string" value="{{league_key_string}}">
+            <input type="text" class="form-control" id="memberName" required placeholder="Enter the New Members Name">
+            <br>
+            <input type="email" class="form-control" id="memberEmail" required placeholder="Enter the New Members Email">
+            <div id="buttonbar">
+              <button class="button" onclick="addMember()" type="submit">Add</button>
+            </div>
+          </div>
+        </div>
+        <!-- Add Admin Div -->
+        <!-- ADMIN NEEDED -->
+        <div id="addAdmin" style="display:none;">
+          <h2>Add an Admin to {{league_name}}</h2>
+          <div id="adminForm">
+            <input type="hidden" name="league_key_string" id="league_key_string" value="{{league_key_string}}">
+            <input type="email" class="form-control" name="admin_email" id="admin_email" required placeholder="Enter the Email of the New Admin">
+            <div id="buttonbar">
+              <button class="button" onclick="addAdmins()" type="submit">Add</button>
+            </div>
+          </div>
+        </div>
+        <!-- emailResults Div -->
+        <!--ADMIN NEEDED -->
+        <div id="emailResults" style="display:none;">
+          <form method="post" action="/emailservice" enctype="multipart/form-data" class="displayed">
+            <h2>Email Ranking</h2>
+            <p align="center">As an Admin, you can send an email from your gmail email to all members that includes a link to their rankings.  To do this, simply click the email button.  You can also include attachments to your email by choosing which files to upload and it will store them as attachments.</p>
+            <br>
+            <br>
+            <p>Add a subject to your email:</p>
+            <input type="text" name="subject" required class="center"/>
+            <br><br>
+            <p>Add a custom note to your email:</p>
+            <textarea  rows="5" cols="50" name="note" class="center"></textarea>
+            <br>
+            <input type="hidden" name="league_key_string" value="{{league_key_string}}"/>
+            <input type="submit" class="button" value="email">
+          </form>
+        </div>
+        <!-- reset Scores Div -->
+        <!-- ADMIN NEEDED -->
+        <div id="resetScores" style="display:none;">
+          <h2>Reset the Scores of all members in {{league_name}}</h2>
+          <h2>Are you sure? This can not be un-done</h2>
+          <form action='/resetScores' method="POST">
+            <input type="hidden" name="league_key_string" value="{{league_key_string}}">
+            <div id="buttonbar">
+              <button class="buttonDanger" type="submit">Do it</button>
+            </div>
+          </form>
+        </div>
+        <!-- Delete League Div -->
+        <!-- ADMIN NEEDED -->
+        <div id="deleteLeague" style="display:none;">
+          <h2>Delete This League Forever</h2>
+          <h2>Are you sure? This can not be un-done</h2>
+          <form action='/deleteLeague' method='POST'>
+            <input type="hidden" name="league_key_string" value="{{league_key_string}}">
+            <div id="buttonbar">
+              <button class="buttonDanger" type="submit">Do it</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <script src="../../assets/js/docs.min.js"></script>
+    -->
+{% endblock %}

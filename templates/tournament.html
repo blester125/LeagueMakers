@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block scripts %}
+  <script src="static/jquery.js"></script>
+  <script src="/static/tournament_js.js"></script>
+{% endblock %}
+{% block content %}
+  <input type="hidden" id="bracket_url" value="{{bracket_url}}"></input>
+  <span id="reloader" style="height: 100%;">
+  <!--iframe src="http://challonge.com/{{bracket_url}}/module?theme=3191" class="embedwindow" frameborder="0" scrolling="auto" allowtransparency="true"></iframe-->
+  <object data="http://challonge.com/{{bracket_url}}/module?theme=3191" class="embedwindow">
+    <!--embed src="http://challonge.com/{{bracket_url}}/module?theme=3191" width="600" height="400"></embed-->
+  </object>
+  </span>
+  {% if admin %}
+  <div id='matches'>
+    <select class="form-control" style="width: 15%;" id="report">
+    {% for match in matches %}
+      <option value="{{match.0}}">{{match.5}}</option>
+    {% endfor %}
+    </select>
+    </br>  
+    <button class="button" onclick="createPopup();" >Report</button>
+  </div>
+  <div id='fade' class='overlay'></div>
+  <div id="popups">
+  {% for match in matches %}
+      <div id="Popup-{{match.0}}" class="popup">
+        <img id="close" src="/static/assets/x.png" align="right" onclick="closePopup({{match.0}})">
+        <p>ENTER RESULTS HERE</p>
+        <br>
+        <br>
+        <input type="radio" class="entrants" name="{{match.0}}" id="{{match.0}}" value="{{match.1}}" checked>{{match.2}}
+        <input type="radio" class="entrants" name="{{match.0}}" id="{{match.0}}" value="{{match.3}}">{{match.4}}
+        <br>
+        <br>
+        <button onclick="update_bracket({{match.0}});" class="button">Submit</button>
+      </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+{% endblock %}

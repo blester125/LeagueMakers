@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+  {% block scripts %}
+    <script src="/static/selecting_winners.js"></script>
+  {% endblock %}
+  {% block content %}
+    <h2>{{league_name}}</h2>
+    {% for i in match_ups %} 
+      <div id="buttonbar">
+        <button class="button round{{i.0}}" id="round{{i.0}} playerA_button" onclick="select(this)" name="{{i.1}}">{{i.1}}</button>
+        vs. 
+        <button class="button round{{i.0}}" id="round{{i.0}} playerB_button" onclick="select(this)" name="{{i.2}}">{{i.2}}</button>
+        </div>
+    {% endfor %}
+    <form action"/results" method="POST">
+      <input type="hidden" name="league_key_string" value="{{league_key_string}}">
+      <input type="hidden" id="rounds_entered" name="rounds_entered" value="">
+      {% for i in match_ups %}
+        <input type="hidden" id="round{{i.0}}winner" name="round{{i.0}}winner">
+        <input type="hidden" id="round{{i.0}}loser" name="round{{i.0}}loser">
+      {% endfor %}
+      <div id="buttonbar">
+        <button class="button" id="submit">Report</button>
+      </div>
+    </form>
+  {% endblock %}

@@ -1,0 +1,244 @@
+input{
+	font-family: Arial, Sans-Serif;
+	font-size: 16px;
+	padding: 6px 6px 6px 6px;
+	width: 250px;
+	margin-bottom: 10px;
+	border-radius: 4px;
+}
+
+h2{
+	font-family: Helvetica, Arial, Sans-Serif;
+	padding:20px 35px;
+	margin: -15px -50px;
+	text-align:center;
+}
+
+html.body{ 
+	margin:0; 
+	padding:0; 
+	height:100%; 
+	width:100%; 
+	background-color: #d3d3d3;
+}
+
+body {
+  padding-top: 70px;
+}
+
+div#homebar{
+	text-align: center;
+  width: 100%;
+	height: 350px;
+	background-color: #000000;
+	overflow:hidden;	
+}
+
+div#buttonbar{
+  text-align: center;
+	width: 100%;
+	display: block;
+	margin-left: auto ;
+  margin-right: auto;
+	margin-top: 20px;	
+}
+
+div.buttonbar{
+  text-align: center;
+  width: 100%;
+  display: block;
+  margin-left: auto ;
+  margin-right: auto;
+  margin-top: 20px; 
+}
+
+img#homepic{
+  width: 1000px;
+	display: bock;
+	margin-left: auto;
+  margin-right: auto 
+}
+
+.button {
+	border-top: 1px solid #96d1f8;
+	background: #65a9d7;
+	padding: 10px 20px;
+	width: 200px;
+	border-radius: 14px;
+	color: white;
+	font-size: 24px;
+	font-family: Helvetica, Arial, Sans-Serif;
+	text-decoration: none;
+	vertical-align: middle;
+ }
+   
+.button:hover {
+	border-top-color: #28597a;
+	background: #28597a;
+	color: #ccc;
+  text-decoration: underline;
+ }
+   
+.button:active {
+	border-top-color: #517a96;
+	background: #517a96;
+  text-decoration: underline;
+ }
+
+.selected{
+  border-top-color: #28597a;
+  background: #28597a;
+  color: #ccc;
+  text-decoration: underline;
+}
+
+.buttonDanger {
+  border-top: 1px solid #96d1f8;
+  background: #FF0000;
+  padding: 10px 20px;
+  width: 200px;
+  border-radius: 14px;
+  color: white;
+  font-size: 24px;
+  font-family: Helvetica, Arial, Sans-Serif;
+  text-decoration: none;
+  vertical-align: middle;
+}
+
+.buttonDanger:hover {
+  border-top-color: #660000;
+  background: #990000;
+  color: #ccc;
+  text-decoration: underline;
+ }
+   
+.buttonDanger:active {
+  border-top-color: #660000;
+  background: #990000;
+  text-decoration: underline;
+ }
+
+
+form.league-pass{
+  display: none; 
+}
+
+.navbar .divider-vertical {
+height: 50px;
+margin: 0px;
+border-right: 1px solid #ffffff;
+border-left: 1px solid #f2f2f2;
+padding: 0px;
+}
+
+.rankTable {
+  table-layout: fixed;
+  width: 100%;
+  white-space: nowrap;
+}
+
+.rankTable td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; 
+}
+
+.rankTable th{
+  text-align: center;
+}
+
+.col-rank{
+  width: 10%;
+}
+
+.col-name{
+  width: 60%; 
+}
+
+.col-score{
+  width: 20%;
+}
+
+.col-pricture{
+  width: 10%;
+}
+
+#col-td{
+  vertical-align: middle;
+}
+
+.popup{
+  text-align: center;
+  display: none;
+  position: fixed;
+  height: 300px;
+  width: 300px;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);  
+  padding: 16px;
+  border: 6px;
+  border-radius: 4px;
+  background-color: #d3d3d3;
+  z-index:1002;
+  overflow: hidden;
+}
+
+.overlay{
+  display: none;
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index:1001;
+  -moz-opacity: 0.8;
+  opacity:.80;
+  filter: alpha(opacity=80);
+}
+
+html{
+  height: 100%;
+}
+
+html, body, .embedwindow{
+  min-height: 100% !important;
+  height: 100%;
+}
+
+.embedwindow{
+  float: right;
+  height: 100%;
+  width: 85%;
+}
+
+div#score{
+  text-align: center;
+  font-weight: 900;
+  font-size: 250%;
+}
+
+.check{
+  margin: 0 auto;
+  width: 15px;
+  padding: 3px;
+}
+
+.displayed {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+ 
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.smallselect{
+  width: 15%; 
+}
